@@ -5,6 +5,7 @@
 
 ## Description
 A block stack game where user mouse clicks to drop a moving block as accurately as possible on the base creating the tallest possible tower.
+It is a game designed to provide entertainment while being simple to play.
 
 
 ## Features
