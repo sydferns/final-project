@@ -4,7 +4,7 @@
 [https://github.com/sydferns/final-project.git ](https://github.com/sydferns/final-project.git)
 
 ## Description
-I plan to make a tower stack game. The blocks move at the top of the screen and the user then clicks in an attempt to stack them.
+A block stack game where user mouse clicks to drop a moving block as accurately as possible on the base creating the tallest possible tower.
 
 
 ## Features
