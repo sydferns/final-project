@@ -11,7 +11,7 @@ class Box():
         self.rect = pygame.Rect(pos[0], pos[1], size, size)
     
     def draw(self, surface):
-        pygame.draw.rect(surface, self.color, self.rect, border_radius= 10)
+        pygame.draw.rect(surface, self.color, self.rect, border_radius= 21)
 
 
 def main():
@@ -19,6 +19,8 @@ def main():
     pygame.display.set_caption("BTS")
     resolution = (1200, 800)
     screen = pygame.display.set_mode(resolution)
+    box = Box((525, 70))
+
     running = True
     while running:
         #Event loop
@@ -26,11 +28,13 @@ def main():
             if event.type == pygame.QUIT:
                 running = False 
         #TODO game logic
+
         #Render & Display
         bg_color = pygame.Color(80,100,200)
         screen.fill(bg_color)
-        surf = pygame.Surface((170, 170))
-        screen.blit(surf, ((resolution[0]//2)-85, 600))
+
+        box.draw(screen)
+
         pygame.display.flip()
     pygame.quit()
 
