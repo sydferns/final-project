@@ -4,8 +4,18 @@ import pygame
 def main():
     pygame.init()
     pygame.display.set_caption("BTS")
-    resolution = (800, 600)
+    resolution = (1200, 800)
     screen = pygame.display.set_mode(resolution)
+    running = True
+    while running:
+        #Event loop
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False 
+        #TODO game logic
+        #Render & Display
+        
+        pygame.display.flip()
     pygame.quit()
 
 
