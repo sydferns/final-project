@@ -16,6 +16,16 @@ class Box():
     def update(self, dt):
         self.age += dt
         self.rect.x += self.speed * self.direction * dt/1000
+
+        #bounce off left
+        if self.rect.x <=0:
+            self.rect.x = 0
+            self.direction = 1
+        
+        #bounce off right
+        elif self.rect.x + self.size >= 1200:
+            self.rect.x = 1200 - self.size
+            self.direction = -1
     
     def draw(self, surface):
         pygame.draw.rect(surface, self.color, self.rect, border_radius= 21)
@@ -46,7 +56,7 @@ def main():
         box.draw(screen)
 
         pygame.display.flip()
-        dt = clock.tick(24)
+        dt = clock.tick(36)
     pygame.quit()
 
 
