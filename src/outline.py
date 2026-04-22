@@ -1,6 +1,19 @@
 import pygame
 
 
+class Box():
+
+
+    def __init__(self, pos=(0,0), size=150):
+        self.x, self.y = pos
+        self.size = size
+        self.color = pygame.Color(220, 150, 0)
+        self.rect = pygame.Rect(pos[0], pos[1], size, size)
+    
+    def draw(self, surface):
+        pygame.draw.rect(surface, self.color, self.rect, border_radius= 10)
+
+
 def main():
     pygame.init()
     pygame.display.set_caption("BTS")
