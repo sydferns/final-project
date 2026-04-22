@@ -14,7 +14,8 @@ def main():
                 running = False 
         #TODO game logic
         #Render & Display
-        
+        bg_color = pygame.Color(80,100,200)
+        screen.fill(bg_color)
         pygame.display.flip()
     pygame.quit()
 
