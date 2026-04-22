@@ -23,8 +23,8 @@ class Box():
             self.direction = 1
         
         #bounce off right
-        elif self.rect.x + self.size >= 1200:
-            self.rect.x = 1200 - self.size
+        elif self.rect.right >= 1200:
+            self.rect.right = 1200
             self.direction = -1
     
     def draw(self, surface):
@@ -50,8 +50,9 @@ def main():
         box.update(dt)
 
         #Render & Display
-        bg_color = pygame.Color(80,100,200)
+        bg_color = pygame.Color(80,100,150)
         screen.fill(bg_color)
+        pygame.draw.rect(screen, (30, 90, 40), (0, 700, 1200, 100)) #grass like
 
         box.draw(screen)
 
