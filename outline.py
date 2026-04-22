@@ -16,6 +16,8 @@ def main():
         #Render & Display
         bg_color = pygame.Color(80,100,200)
         screen.fill(bg_color)
+        surf = pygame.Surface((170, 170))
+        screen.blit(surf, ((resolution[0]//2)-85, 600))
         pygame.display.flip()
     pygame.quit()
 
