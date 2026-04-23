@@ -34,6 +34,11 @@ class Box():
         if self.falling:
             self.fall_speed += 1
             self.rect.y += self.fall_speed
+
+            #stop on base
+            if self.rect.bottom >= 680:
+                self.rect.bottom = 680
+                self.falling = False
     
     def draw(self, surface):
         pygame.draw.rect(surface, self.color, self.rect, border_radius= 21)
@@ -47,6 +52,7 @@ def main():
     resolution = (1200, 800)
     screen = pygame.display.set_mode(resolution)
     box = Box((525, 70)) 
+    base = pygame.Rect(400, 680, 400, 120)
 
     running = True
     while running:
@@ -65,7 +71,7 @@ def main():
         bg_color = pygame.Color(80,100,150)
         screen.fill(bg_color)
         pygame.draw.rect(screen, (30, 90, 40), (0, 700, 1200, 100)) #grass like
-        pygame.draw.rect(screen, (100, 100, 100), (400, 700, 400, 150))
+        pygame.draw.rect(screen, (100, 100, 100), base)
 
         box.draw(screen)
 
