@@ -16,10 +16,10 @@ class Box():
         self.falling = False
         self.fall_speed = 0
 
-    def update(self, dt):
+    def update(self, dt, base):
         #movement
         if self.moving:
-            self.rect.x += self.speed * self.direction * dt/800
+            self.rect.x += self.speed * self.direction * dt/1000
 
         #bounce off left
             if self.rect.x <=0:
@@ -36,9 +36,16 @@ class Box():
             self.rect.y += self.fall_speed
 
             #stop on base
-            if self.rect.bottom >= 680:
+            if self.rect.bottom >= base.top:
                 self.rect.bottom = 680
                 self.falling = False
+
+                if self.rect.right > base.left and self.rect.left < base.right:
+                    print("Good landing!")
+                else:
+                    print("Game Over")
+                    pygame.quit()
+                    exit()
     
     def draw(self, surface):
         pygame.draw.rect(surface, self.color, self.rect, border_radius= 21)
@@ -64,8 +71,9 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 box.moving = False
                 box.falling = True
+
         #TODO game logic
-        box.update(dt)
+        box.update(dt, base)
 
         #Render & Display
         bg_color = pygame.Color(80,100,150)
