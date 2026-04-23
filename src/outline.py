@@ -12,8 +12,11 @@ class Box():
         self.age = 0
         self.speed = speed
         self.direction = 1
+        self.moving = True
 
     def update(self, dt):
+        if not self.moving:
+            return
         self.age += dt
         self.rect.x += self.speed * self.direction * dt/1000
 
@@ -38,7 +41,7 @@ def main():
     dt = 0
     resolution = (1200, 800)
     screen = pygame.display.set_mode(resolution)
-    box = Box((525, 70))
+    box = Box((525, 70)) 
 
     running = True
     while running:
@@ -53,8 +56,12 @@ def main():
         bg_color = pygame.Color(80,100,150)
         screen.fill(bg_color)
         pygame.draw.rect(screen, (30, 90, 40), (0, 700, 1200, 100)) #grass like
+        pygame.draw.rect(screen, (100, 100, 100), (400, 700, 400, 150))
 
         box.draw(screen)
+
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            box.moving = False
 
         pygame.display.flip()
         dt = clock.tick(36)
