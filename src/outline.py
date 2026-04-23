@@ -13,22 +13,27 @@ class Box():
         self.speed = speed
         self.direction = 1
         self.moving = True
+        self.falling = False
+        self.fall_speed = 0
 
     def update(self, dt):
-        if not self.moving:
-            return
-        self.age += dt
-        self.rect.x += self.speed * self.direction * dt/1000
+        #movement
+        if self.moving:
+            self.rect.x += self.speed * self.direction * dt/800
 
         #bounce off left
-        if self.rect.x <=0:
-            self.rect.x = 0
-            self.direction = 1
-        
+            if self.rect.x <=0:
+                self.rect.x = 0
+                self.direction = 1
         #bounce off right
-        elif self.rect.right >= 1200:
-            self.rect.right = 1200
-            self.direction = -1
+            elif self.rect.right >= 1200:
+                self.rect.right = 1200
+                self.direction = -1
+        
+        #falling
+        if self.falling:
+            self.fall_speed += 1
+            self.rect.y += self.fall_speed
     
     def draw(self, surface):
         pygame.draw.rect(surface, self.color, self.rect, border_radius= 21)
@@ -49,6 +54,10 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False 
+            
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                box.moving = False
+                box.falling = True
         #TODO game logic
         box.update(dt)
 
@@ -59,9 +68,6 @@ def main():
         pygame.draw.rect(screen, (100, 100, 100), (400, 700, 400, 150))
 
         box.draw(screen)
-
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            box.moving = False
 
         pygame.display.flip()
         dt = clock.tick(36)
