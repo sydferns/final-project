@@ -4,11 +4,12 @@ import pygame
 class Box():
 
 
-    def __init__(self, pos=(0,0), size=150, speed=200):
+    def __init__(self, pos=(0,0), speed=200):
         self.x, self.y = pos
-        self.size = size
-        self.color = pygame.Color(220, 150, 0)
-        self.rect = pygame.Rect(pos[0], pos[1], size, size)
+        self.color = pygame.Color(220, 150, 90) #220, 150, 0
+        self.width = 250
+        self.height = 150
+        self.rect = pygame.Rect(pos[0], pos[1], self.width, self.height)
         self.age = 0
         self.speed = speed
         self.direction = 1
@@ -50,6 +51,9 @@ class Box():
     
     def draw(self, surface):
         pygame.draw.rect(surface, self.color, self.rect, border_radius= 21)
+        pygame.draw.rect(surface, (240, 210, 170), self.rect, 5, border_radius= 21) 
+        #220, 200, 100 or 255, 220, 170 or 235, 200, 165
+
 
 
 def main():
@@ -59,7 +63,7 @@ def main():
     dt = 0
     resolution = (1200, 800)
     screen = pygame.display.set_mode(resolution)
-    boxes = [Box((525, 70))] 
+    boxes = [Box((475, 70))] 
     base = pygame.Rect(400, 680, 400, 120)
     support = base
     game_started = False
@@ -85,7 +89,7 @@ def main():
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_r:
-                    boxes = [Box((525, 70))]
+                    boxes = [Box((475, 70))]
                     box = boxes[-1]
                     support = base
                     game_over = False #don't need start screen for restart
@@ -96,7 +100,7 @@ def main():
 
             if new_box:
                 support = boxes[-1].rect
-                boxes.append(Box((525, 70)))
+                boxes.append(Box((475, 70)))
 
         #Render & Display
         if show_start_screen:
@@ -127,6 +131,7 @@ def main():
         pygame.display.flip()
         dt = clock.tick(36)
     pygame.quit()
+
 
 
 
