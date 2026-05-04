@@ -88,7 +88,7 @@ def main():
                     boxes = [Box((525, 70))]
                     box = boxes[-1]
                     support = base
-                    game_over = False
+                    game_over = False #don't need start screen for restart
 
         #game logic
         if game_started and not game_over:
@@ -99,21 +99,13 @@ def main():
                 boxes.append(Box((525, 70)))
 
         #Render & Display
-        screen.fill((80,100,150))
-        pygame.draw.rect(screen, (30, 90, 40), (0, 700, 1200, 100)) #grass like
-        pygame.draw.rect(screen, (60, 60, 70), base)
-        pygame.draw.rect(screen, (120, 110, 140), base, 5)
-
-        for b in boxes:
-            b.draw(screen)
-        
         if show_start_screen:
             screen.fill((20,20,40))
             font1 = pygame.font.SysFont(None, 80)
             start_text = font1.render("Click to Start", True, (255, 255, 255))
             screen.blit(start_text, (300, 350))
 
-        if game_over:
+        elif game_over:
             font = pygame.font.SysFont(None, 120)
             text = font.render("GAME OVER", True, (200, 50, 50))
             screen.blit(text, (350, 300))
@@ -121,6 +113,15 @@ def main():
             font_2 = pygame.font.SysFont(None, 40)
             restart_text = font_2.render("Press R to restart", True, (255, 255, 255))
             screen.blit(restart_text, (350, 380))
+
+        else:
+            screen.fill((80, 100, 150))
+            pygame.draw.rect(screen, (30, 90, 40), (0, 700, 1200, 100) )
+            pygame.draw.rect(screen, (60, 60, 70), base)
+            pygame.draw.rect(screen, (120, 110, 140), base, 5)
+            
+            for b in boxes:
+                b.draw(screen)
         
 
         pygame.display.flip()
