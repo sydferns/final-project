@@ -17,7 +17,7 @@ class Box():
         self.falling = False
         self.fall_speed = 0
 
-    def update(self, dt, base, game_over):
+    def update(self, dt, support, game_over):
         new_box = False
         #movement
         if self.moving:
@@ -38,11 +38,11 @@ class Box():
             self.rect.y += self.fall_speed
 
             #stop on base
-            if self.rect.bottom >= base.top and self.falling:
-                self.rect.bottom = base.top
+            if self.rect.bottom >= support.top and self.falling:
+                self.rect.bottom = support.top
                 self.falling = False
 
-                if self.rect.right > base.left and self.rect.left < base.right:
+                if self.rect.right > support.left and self.rect.left < support.right:
                     print("Good landing!")
                     new_box = True
                 else:
@@ -62,6 +62,7 @@ def main():
     screen = pygame.display.set_mode(resolution)
     boxes = [Box((525, 70))] 
     base = pygame.Rect(400, 680, 400, 120)
+    support = base
     game_over = False
 
     running = True
@@ -82,8 +83,9 @@ def main():
                 box.falling = True
 
         #game logic
-        game_over, new_box = box.update(dt, base, game_over)
+        game_over, new_box = box.update(dt, support, game_over)
         if new_box and not game_over:
+            support = boxes[-1].rect
             boxes.append(Box((525, 70)))
 
         #Render & Display
