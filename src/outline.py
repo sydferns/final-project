@@ -12,6 +12,7 @@ class Box():
         self.age = 0
         self.speed = speed
         self.direction = 1
+        self.screen_width = 1200
         self.moving = True
         self.falling = False
         self.fall_speed = 0
@@ -27,8 +28,8 @@ class Box():
                 self.rect.x = 0
                 self.direction = 1
         #bounce off right
-            elif self.rect.right >= 1200:
-                self.rect.right = 1200
+            elif self.rect.right >= self.screen_width:
+                self.rect.right = self.screen_width
                 self.direction = -1
         
         #falling
@@ -65,6 +66,7 @@ def main():
 
     running = True
     while running:
+        box = boxes[-1]
         #Event loop
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -73,8 +75,6 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 box.moving = False
                 box.falling = True
-        
-        box = boxes[-1]
 
         #game logic
         game_over, new_box = box.update(dt, base, game_over)
