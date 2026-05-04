@@ -47,6 +47,7 @@ class Box():
                     new_box = True
                 else:
                     game_over = True
+
         return game_over, new_box
     
     def draw(self, surface):
@@ -55,17 +56,46 @@ class Box():
         #220, 200, 100 or 255, 220, 170 or 235, 200, 165
 
 
+# -- display and render function-----------------------------------------------------------
+
+def display(screen, base, show_start_screen, game_over):
+    if show_start_screen:
+        screen.fill((20,20,40))
+        font1 = pygame.font.SysFont(None, 80)
+        start_text = font1.render("Click to Start", True, (255, 255, 255))
+        screen.blit(start_text, (300, 350))
+
+    elif game_over:
+        font = pygame.font.SysFont(None, 120)
+        text = font.render("GAME OVER", True, (200, 50, 50))
+        screen.blit(text, (350, 300))
+
+        font_2 = pygame.font.SysFont(None, 40)
+        restart_text = font_2.render("Press R to restart", True, (255, 255, 255))
+        screen.blit(restart_text, (350, 380))
+
+    else:
+        screen.fill((80, 100, 150))
+        pygame.draw.rect(screen, (30, 90, 40), (0, 700, 1200, 100) )
+        pygame.draw.rect(screen, (60, 60, 70), base)
+        pygame.draw.rect(screen, (120, 110, 140), base, 5)
+
+
+# -- main loop -----------------------------------------------------------------------------
 
 def main():
     pygame.init()
     pygame.display.set_caption("BTS")
     clock = pygame.time.Clock()
     dt = 0
+
     resolution = (1200, 800)
     screen = pygame.display.set_mode(resolution)
+
     boxes = [Box((475, 70))] 
     base = pygame.Rect(400, 680, 400, 120)
     support = base
+
     game_started = False
     show_start_screen = True
     game_over = False
@@ -103,36 +133,17 @@ def main():
                 boxes.append(Box((475, 70)))
 
         #Render & Display
-        if show_start_screen:
-            screen.fill((20,20,40))
-            font1 = pygame.font.SysFont(None, 80)
-            start_text = font1.render("Click to Start", True, (255, 255, 255))
-            screen.blit(start_text, (300, 350))
-
-        elif game_over:
-            font = pygame.font.SysFont(None, 120)
-            text = font.render("GAME OVER", True, (200, 50, 50))
-            screen.blit(text, (350, 300))
-
-            font_2 = pygame.font.SysFont(None, 40)
-            restart_text = font_2.render("Press R to restart", True, (255, 255, 255))
-            screen.blit(restart_text, (350, 380))
-
-        else:
-            screen.fill((80, 100, 150))
-            pygame.draw.rect(screen, (30, 90, 40), (0, 700, 1200, 100) )
-            pygame.draw.rect(screen, (60, 60, 70), base)
-            pygame.draw.rect(screen, (120, 110, 140), base, 5)
+        display(screen, base, show_start_screen, game_over)
             
+        if game_started and not game_over:    
             for b in boxes:
                 b.draw(screen)
         
 
         pygame.display.flip()
         dt = clock.tick(36)
+
     pygame.quit()
-
-
 
 
 if __name__ == "__main__":
