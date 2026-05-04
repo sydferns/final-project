@@ -17,6 +17,7 @@ class Box():
         self.fall_speed = 0
 
     def update(self, dt, base, game_over):
+        new_box = False
         #movement
         if self.moving:
             self.rect.x += self.speed * self.direction * dt/1000
@@ -42,9 +43,10 @@ class Box():
 
                 if self.rect.right > base.left and self.rect.left < base.right:
                     print("Good landing!")
+                    new_box = True
                 else:
                     game_over = True
-        return game_over
+        return game_over, new_box
     
     def draw(self, surface):
         pygame.draw.rect(surface, self.color, self.rect, border_radius= 21)
@@ -73,12 +75,15 @@ def main():
                 box.falling = True
 
         #game logic
-        game_over = box.update(dt, base, game_over)
+        game_over, new_box = box.update(dt, base, game_over)
+        if new_box and not game_over:
+            box = Box((525, 70))
 
         #Render & Display
         screen.fill((80,100,150))
         pygame.draw.rect(screen, (30, 90, 40), (0, 700, 1200, 100)) #grass like
-        pygame.draw.rect(screen, (100, 100, 100), base)
+        pygame.draw.rect(screen, (60, 60, 70), base)
+        pygame.draw.rect(screen, (120, 110, 140), base, 5)
 
         box.draw(screen)
 
