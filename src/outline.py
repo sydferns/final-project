@@ -16,7 +16,7 @@ class Box():
         self.falling = False
         self.fall_speed = 0
 
-    def update(self, dt, base):
+    def update(self, dt, base, game_over):
         #movement
         if self.moving:
             self.rect.x += self.speed * self.direction * dt/1000
@@ -37,15 +37,14 @@ class Box():
 
             #stop on base
             if self.rect.bottom >= base.top:
-                self.rect.bottom = 680
+                self.rect.bottom = base.top
                 self.falling = False
 
                 if self.rect.right > base.left and self.rect.left < base.right:
                     print("Good landing!")
                 else:
-                    print("Game Over")
-                    pygame.quit()
-                    exit()
+                    game_over = True
+        return game_over
     
     def draw(self, surface):
         pygame.draw.rect(surface, self.color, self.rect, border_radius= 21)
@@ -60,6 +59,7 @@ def main():
     screen = pygame.display.set_mode(resolution)
     box = Box((525, 70)) 
     base = pygame.Rect(400, 680, 400, 120)
+    game_over = False
 
     running = True
     while running:
@@ -72,16 +72,20 @@ def main():
                 box.moving = False
                 box.falling = True
 
-        #TODO game logic
-        box.update(dt, base)
+        #game logic
+        game_over = box.update(dt, base, game_over)
 
         #Render & Display
-        bg_color = pygame.Color(80,100,150)
-        screen.fill(bg_color)
+        screen.fill((80,100,150))
         pygame.draw.rect(screen, (30, 90, 40), (0, 700, 1200, 100)) #grass like
         pygame.draw.rect(screen, (100, 100, 100), base)
 
         box.draw(screen)
+
+        if game_over:
+            font = pygame.font.SysFont(None, 120)
+            text = font.render("GAME OVER", True, (200, 50, 50))
+            screen.blit(text, (350, 300))
 
         pygame.display.flip()
         dt = clock.tick(36)
