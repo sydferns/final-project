@@ -43,7 +43,6 @@ class Box():
                 self.falling = False
 
                 if self.rect.right > support.left and self.rect.left < support.right:
-                    print("Good landing!")
                     new_box = True
                 else:
                     game_over = True
@@ -76,6 +75,8 @@ def main():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_r:
                     boxes = [Box((525, 70))]
+                    box = boxes[-1]
+                    support = base
                     game_over = False
 
             if event.type == pygame.MOUSEBUTTONDOWN:
