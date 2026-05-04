@@ -37,7 +37,7 @@ class Box():
             self.rect.y += self.fall_speed
 
             #stop on base
-            if self.rect.bottom >= base.top:
+            if self.rect.bottom >= base.top and self.falling:
                 self.rect.bottom = base.top
                 self.falling = False
 
@@ -59,7 +59,7 @@ def main():
     dt = 0
     resolution = (1200, 800)
     screen = pygame.display.set_mode(resolution)
-    box = Box((525, 70)) 
+    boxes = [Box((525, 70))] 
     base = pygame.Rect(400, 680, 400, 120)
     game_over = False
 
@@ -69,15 +69,17 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False 
-            
+
             if event.type == pygame.MOUSEBUTTONDOWN:
                 box.moving = False
                 box.falling = True
+        
+        box = boxes[-1]
 
         #game logic
         game_over, new_box = box.update(dt, base, game_over)
         if new_box and not game_over:
-            box = Box((525, 70))
+            boxes.append(Box((525, 70)))
 
         #Render & Display
         screen.fill((80,100,150))
@@ -85,7 +87,8 @@ def main():
         pygame.draw.rect(screen, (60, 60, 70), base)
         pygame.draw.rect(screen, (120, 110, 140), base, 5)
 
-        box.draw(screen)
+        for b in boxes:
+            b.draw(screen)
 
         if game_over:
             font = pygame.font.SysFont(None, 120)
