@@ -71,6 +71,11 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False 
+            
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_r:
+                    boxes = [Box((525, 70))]
+                    game_over = False
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 box.moving = False
@@ -94,6 +99,10 @@ def main():
             font = pygame.font.SysFont(None, 120)
             text = font.render("GAME OVER", True, (200, 50, 50))
             screen.blit(text, (350, 300))
+
+            font_2 = pygame.font.SysFont(None, 40)
+            restart_text = font_2.render("Press R to restart", True, (255, 255, 255))
+            screen.blit(restart_text, (350, 380))
 
         pygame.display.flip()
         dt = clock.tick(36)
