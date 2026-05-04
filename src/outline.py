@@ -38,7 +38,7 @@ class Box():
             self.rect.y += self.fall_speed
 
             #stop on base
-            if self.rect.bottom >= support.top and self.falling:
+            if self.rect.bottom >= support.top:
                 self.rect.bottom = support.top
                 self.falling = False
 
@@ -62,6 +62,8 @@ def main():
     boxes = [Box((525, 70))] 
     base = pygame.Rect(400, 680, 400, 120)
     support = base
+    game_started = False
+    show_start_screen = True
     game_over = False
 
     running = True
@@ -72,6 +74,11 @@ def main():
             if event.type == pygame.QUIT:
                 running = False 
             
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if show_start_screen:
+                    game_started = True
+                    show_start_screen = False
+
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_r:
                     boxes = [Box((525, 70))]
@@ -84,10 +91,12 @@ def main():
                 box.falling = True
 
         #game logic
-        game_over, new_box = box.update(dt, support, game_over)
-        if new_box and not game_over:
-            support = boxes[-1].rect
-            boxes.append(Box((525, 70)))
+        if game_started and not game_over:
+            game_over, new_box = box.update(dt, support, game_over)
+
+            if new_box:
+                support = boxes[-1].rect
+                boxes.append(Box((525, 70)))
 
         #Render & Display
         screen.fill((80,100,150))
@@ -106,6 +115,12 @@ def main():
             font_2 = pygame.font.SysFont(None, 40)
             restart_text = font_2.render("Press R to restart", True, (255, 255, 255))
             screen.blit(restart_text, (350, 380))
+
+        if show_start_screen:
+            screen.fill((20,20,40))
+            font1 = pygame.font.SysFont(None, 80)
+            start_text = font1.render("Click to Start", True, (255, 255, 255))
+            screen.blit(start_text, (300, 350))
 
         pygame.display.flip()
         dt = clock.tick(36)
