@@ -78,6 +78,10 @@ def main():
                 if show_start_screen:
                     game_started = True
                     show_start_screen = False
+                    
+                elif game_started and not game_over:
+                    box.moving = False
+                    box.falling = True
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_r:
@@ -85,10 +89,6 @@ def main():
                     box = boxes[-1]
                     support = base
                     game_over = False
-
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                box.moving = False
-                box.falling = True
 
         #game logic
         if game_started and not game_over:
@@ -106,6 +106,12 @@ def main():
 
         for b in boxes:
             b.draw(screen)
+        
+        if show_start_screen:
+            screen.fill((20,20,40))
+            font1 = pygame.font.SysFont(None, 80)
+            start_text = font1.render("Click to Start", True, (255, 255, 255))
+            screen.blit(start_text, (300, 350))
 
         if game_over:
             font = pygame.font.SysFont(None, 120)
@@ -115,12 +121,7 @@ def main():
             font_2 = pygame.font.SysFont(None, 40)
             restart_text = font_2.render("Press R to restart", True, (255, 255, 255))
             screen.blit(restart_text, (350, 380))
-
-        if show_start_screen:
-            screen.fill((20,20,40))
-            font1 = pygame.font.SysFont(None, 80)
-            start_text = font1.render("Click to Start", True, (255, 255, 255))
-            screen.blit(start_text, (300, 350))
+        
 
         pygame.display.flip()
         dt = clock.tick(36)
