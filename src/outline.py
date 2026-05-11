@@ -141,8 +141,8 @@ def main():
 
             if new_box:
                 score += 1
-                support = boxes[-1].rect
-                new_y = support.y - 180
+                support = box.rect
+                new_y = support.y - 460
                 boxes.append(Box((475, new_y)))
 
         #Render & Display
