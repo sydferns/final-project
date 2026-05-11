@@ -109,8 +109,9 @@ def main():
     running = True
     while running:
         box = boxes[-1]
-        camera_target = 150-  min(b.rect.y for b in boxes)
-        camera += (camera_target - camera) * 0.1
+        if len(boxes) > 1:
+            camera_target = 150- (support.y - 400)
+            camera += (camera_target - camera) * 0.1
 
         #Event loop
         for event in pygame.event.get():
@@ -160,7 +161,7 @@ def main():
         
 
         pygame.display.flip()
-        dt = clock.tick(36)
+        dt = clock.tick(60)
 
     pygame.quit()
 
