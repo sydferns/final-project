@@ -53,8 +53,8 @@ class Box():
     def draw(self, surface, camera):
         draw_rect = self.rect.copy()
         draw_rect.y += camera
-        pygame.draw.rect(surface, self.color, self.rect, border_radius= 21)
-        pygame.draw.rect(surface, (240, 210, 170), self.rect, 5, border_radius= 21) 
+        pygame.draw.rect(surface, self.color, draw_rect, border_radius= 21)
+        pygame.draw.rect(surface, (240, 210, 170), draw_rect, 5, border_radius= 21) 
         #220, 200, 100 or 255, 220, 170 or 235, 200, 165
 
 
