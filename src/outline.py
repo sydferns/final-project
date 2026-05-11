@@ -82,8 +82,8 @@ def display(screen, base, show_start_screen, game_over, camera):
         pygame.draw.rect(screen, (30, 90, 40), ground_rect)
         base_draw = base.copy()
         base_draw.y += camera
-        pygame.draw.rect(screen, (60, 60, 70), base)
-        pygame.draw.rect(screen, (120, 110, 140), base, 5)
+        pygame.draw.rect(screen, (60, 60, 70), base_draw)
+        pygame.draw.rect(screen, (120, 110, 140), base_draw, 5)
 
 
 # -- main loop -----------------------------------------------------------------------------
@@ -105,6 +105,7 @@ def main():
     show_start_screen = True
     game_over = False
     score = 0
+    camera = 0
 
     running = True
     while running:
