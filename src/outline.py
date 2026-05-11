@@ -54,8 +54,7 @@ class Box():
         draw_rect = self.rect.copy()
         draw_rect.y += camera
         pygame.draw.rect(surface, self.color, draw_rect, border_radius= 21)
-        pygame.draw.rect(surface, (240, 210, 170), draw_rect, 5, border_radius= 21) 
-        #220, 200, 100 or 255, 220, 170 or 235, 200, 165
+        pygame.draw.rect(surface, (240, 210, 170), draw_rect, 5, border_radius= 21)
 
 
 # -- display and render function-----------------------------------------------------------
@@ -110,7 +109,8 @@ def main():
     running = True
     while running:
         box = boxes[-1]
-        camera = 150 - box.rect.y
+        camera_target = 150-  min(b.rect.y for b in boxes)
+        camera += (camera_target - camera) * 0.1
 
         #Event loop
         for event in pygame.event.get():
@@ -141,7 +141,7 @@ def main():
             if new_box:
                 score += 1
                 support = boxes[-1].rect
-                new_y = support.y - 220
+                new_y = support.y - 180
                 boxes.append(Box((475, new_y)))
 
         #Render & Display
