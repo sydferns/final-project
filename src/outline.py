@@ -99,6 +99,7 @@ def main():
     game_started = False
     show_start_screen = True
     game_over = False
+    score = 0
 
     running = True
     while running:
@@ -123,17 +124,22 @@ def main():
                     box = boxes[-1]
                     support = base
                     game_over = False #don't need start screen for restart
+                    score = 0
 
         #game logic
         if game_started and not game_over:
             game_over, new_box = box.update(dt, support, game_over)
 
             if new_box:
+                score += 1
                 support = boxes[-1].rect
                 boxes.append(Box((475, 70)))
 
         #Render & Display
         display(screen, base, show_start_screen, game_over)
+        score_font = pygame.font.SysFont(None, 50)
+        score_text = score_font.render(f"Score: {score}", True, (255,255,255))
+        screen.blit(score_text, (20,20))
             
         if game_started and not game_over:    
             for b in boxes:
