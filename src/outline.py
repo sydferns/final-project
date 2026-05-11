@@ -50,7 +50,9 @@ class Box():
 
         return game_over, new_box
     
-    def draw(self, surface):
+    def draw(self, surface, camera):
+        draw_rect = self.rect.copy()
+        draw_rect.y += camera
         pygame.draw.rect(surface, self.color, self.rect, border_radius= 21)
         pygame.draw.rect(surface, (240, 210, 170), self.rect, 5, border_radius= 21) 
         #220, 200, 100 or 255, 220, 170 or 235, 200, 165
@@ -58,7 +60,7 @@ class Box():
 
 # -- display and render function-----------------------------------------------------------
 
-def display(screen, base, show_start_screen, game_over):
+def display(screen, base, show_start_screen, game_over, camera):
     if show_start_screen:
         screen.fill((20,20,40))
         font1 = pygame.font.SysFont(None, 80)
@@ -76,7 +78,10 @@ def display(screen, base, show_start_screen, game_over):
 
     else:
         screen.fill((80, 100, 150))
-        pygame.draw.rect(screen, (30, 90, 40), (0, 700, 1200, 100) )
+        ground_rect = pygame.Rect(0, 700 + camera, 1200, 100)
+        pygame.draw.rect(screen, (30, 90, 40), ground_rect)
+        base_draw = base.copy()
+        base_draw.y += camera
         pygame.draw.rect(screen, (60, 60, 70), base)
         pygame.draw.rect(screen, (120, 110, 140), base, 5)
 
@@ -104,6 +109,8 @@ def main():
     running = True
     while running:
         box = boxes[-1]
+        camera = 150 - box.rect.y
+
         #Event loop
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -123,8 +130,8 @@ def main():
                     boxes = [Box((475, 70))]
                     box = boxes[-1]
                     support = base
-                    game_over = False #don't need start screen for restart
                     score = 0
+                    game_over = False #don't need start screen for restart
 
         #game logic
         if game_started and not game_over:
@@ -133,17 +140,22 @@ def main():
             if new_box:
                 score += 1
                 support = boxes[-1].rect
-                boxes.append(Box((475, 70)))
+                new_y = support.y - 220
+                boxes.append(Box((475, new_y)))
 
         #Render & Display
-        display(screen, base, show_start_screen, game_over)
+        display(screen, base, show_start_screen, game_over, camera)
+
+        if game_started and not game_over:    
+            for b in boxes:
+                b.draw(screen, camera)
+
+        #scoring
         score_font = pygame.font.SysFont(None, 50)
         score_text = score_font.render(f"Score: {score}", True, (255,255,255))
         screen.blit(score_text, (20,20))
             
-        if game_started and not game_over:    
-            for b in boxes:
-                b.draw(screen)
+        
         
 
         pygame.display.flip()
