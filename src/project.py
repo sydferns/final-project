@@ -142,11 +142,13 @@ def main():
 
             if new_box:
                 #perfect landing
-                if (box.rect.centerx - support.centerx) <10 and (box.rect.centerx -
-                                                                 support.centerx) > -10:
-                    score += 5
+                offset = abs(box.rect.centerx - support.centerx)
+                if offset < 5:
+                    score += 10 # perfect
+                elif offset < 15:
+                    score += 5 # good
                 else:
-                    score += 1
+                    score += 1 # ok
 
                 support = box.rect
                 new_y = support.y - 460
