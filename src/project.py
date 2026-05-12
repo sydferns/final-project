@@ -133,6 +133,7 @@ def main():
                     box = boxes[-1]
                     support = base
                     score = 0
+                    camera = 0
                     game_over = False #don't need start screen for restart
 
         #game logic
