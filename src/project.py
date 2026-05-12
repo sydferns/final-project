@@ -100,7 +100,7 @@ def display(screen, base, show_start_screen, game_over, camera, feedback, feedba
 
 def main():
     pygame.init()
-    pygame.display.set_caption("BTS")
+    pygame.display.set_caption("Block Tower Stack")
     clock = pygame.time.Clock()
     dt = 0
 
