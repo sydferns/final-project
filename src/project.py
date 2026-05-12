@@ -141,7 +141,13 @@ def main():
             game_over, new_box = box.update(dt, support, game_over)
 
             if new_box:
-                score += 1
+                #perfect landing
+                if (box.rect.centerx - support.centerx) <10 and (box.rect.centerx -
+                                                                 support.centerx) > -10:
+                    score += 5
+                else:
+                    score += 1
+
                 support = box.rect
                 new_y = support.y - 460
                 boxes.append(Box((475, new_y)))
