@@ -126,6 +126,9 @@ def main():
             camera_target = 150- (support.y - 400)
             camera += (camera_target - camera) * 0.1
 
+            if feedback_timer > 0:
+                feedback_timer -= 1
+
         #Event loop
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -167,7 +170,7 @@ def main():
                     feedback = ""
                 feedback_timer = 60 
 
-                support = box.rect
+                support = box.rect.copy()
                 new_y = support.y - 460
                 boxes.append(Box((475, new_y)))
 
