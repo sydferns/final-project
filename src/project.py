@@ -59,7 +59,7 @@ class Box():
 
 # -- display and render function-----------------------------------------------------------
 
-def display(screen, base, show_start_screen, game_over, camera):
+def display(screen, base, show_start_screen, game_over, camera, feedback, feedback_timer):
     if show_start_screen:
         screen.fill((20,20,40))
         font1 = pygame.font.SysFont(None, 80)
@@ -83,6 +83,17 @@ def display(screen, base, show_start_screen, game_over, camera):
         base_draw.y += camera
         pygame.draw.rect(screen, (60, 60, 70), base_draw)
         pygame.draw.rect(screen, (120, 110, 140), base_draw, 5)
+    
+    if feedback_timer > 0 and feedback != "":
+        font = pygame.font.SysFont(None, 100)
+
+        if feedback == "PERFECT!":
+            color = (255, 220, 0)
+        elif feedback == "GOOD":
+            color = (100, 255, 100)
+
+        text = font.render (feedback, True, color)
+        screen.blit(text, (500, 50))
 
 
 # -- main loop -----------------------------------------------------------------------------
@@ -105,6 +116,8 @@ def main():
     game_over = False
     score = 0
     camera = 0
+    feedback = ""
+    feedback_timer = 0
 
     running = True
     while running:
@@ -145,17 +158,21 @@ def main():
                 offset = abs(box.rect.centerx - support.centerx)
                 if offset < 5:
                     score += 10 # perfect
-                elif offset < 15:
+                    feedback = "PERFECT!"
+                elif offset < 30:
                     score += 5 # good
+                    feedback = "GOOD"
                 else:
                     score += 1 # ok
+                    feedback = ""
+                feedback_timer = 60 
 
                 support = box.rect
                 new_y = support.y - 460
                 boxes.append(Box((475, new_y)))
 
         #Render & Display
-        display(screen, base, show_start_screen, game_over, camera)
+        display(screen, base, show_start_screen, game_over, camera, feedback, feedback_timer)
 
         if game_started and not game_over:    
             for b in boxes:
