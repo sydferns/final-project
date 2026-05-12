@@ -33,6 +33,7 @@ There are many ways the project could be improved upon in the future:
 - Physics enhancements: Adding wind or obstacles that fly in the screen randomly could make the game more challenging.
 - Sound effects or music: would improve the game feel and make it more immersive.
 - Difficulty: Increasing block speed would make the game more challenging to try. Cutting off any extra blocks that don't overlap with the new base will make it even more challenging to score.
+- Keep a highschore tracker: Makes players want to beat their previous score.
 
 As the project grows with these improvements, splitting the project into multiple files would improve maintainence.
 
