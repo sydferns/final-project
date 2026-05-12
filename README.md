@@ -1,7 +1,7 @@
 # Block Tower Stack
 
 ## Demo
-Demo Video:
+Demo Video: https://youtu.be/5xuDdk14Ya8
 
 ## GitHub Repository
 GitHub Repo: https://github.com/sydferns/final-project.git
