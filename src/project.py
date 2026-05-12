@@ -85,7 +85,7 @@ def display(screen, base, show_start_screen, game_over, camera, feedback, feedba
         pygame.draw.rect(screen, (120, 110, 140), base_draw, 5)
     
     if feedback_timer > 0 and feedback != "":
-        font = pygame.font.SysFont(None, 100)
+        font = pygame.font.SysFont(None, 77)
 
         if feedback == "PERFECT!":
             color = (255, 220, 0)
@@ -93,7 +93,7 @@ def display(screen, base, show_start_screen, game_over, camera, feedback, feedba
             color = (100, 255, 100)
 
         text = font.render (feedback, True, color)
-        screen.blit(text, (500, 50))
+        screen.blit(text, (20, 50))
 
 
 # -- main loop -----------------------------------------------------------------------------
